@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z56XV344LR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-Z56XV344LR');
+</script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>05 · Delegating to AI Agents</title>
+  <link rel="stylesheet" href="../assets/course.css">
+  <script defer src="../assets/quiz.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <nav class="site-nav" aria-label="Course navigation">
+    <a class="site-brand" href="../index.html">Governance</a>
+    <div class="nav-links">
+      <a href="../index.html#track-governance">Governance</a>
+      <a href="../index.html#track-agents">Architecture</a>
+      <a href="../reference/deep-thinking.html">Dilemmas</a>
+      <a href="../reference/flashcards.html">Flashcards</a>
+      <a href="../index.html#references">Reference</a>
+    </div>
+  </nav>
+</header>
+<main id="main">
+  <p class="eyebrow">Lesson 05 · Capstone · About 12 minutes</p>
+  <h1>Delegating to AI Agents: Power, Guardrails &amp; Retained Accountability</h1>
+  <div class="callout">
+    <strong>Your tangible win:</strong> evaluate any enterprise AI agent deployment across authorization, monitoring, escalation, and retained legal accountability—applying corporate governance directly to autonomous systems.
+  </div>
+
+  <h2>First, retrieve—not reread</h2>
+  <p>From memory: why does corporate governance in India focus so heavily on Related Party Transactions (RPTs), while US governance historically focused on executive stock options and managerial compensation?</p>
+  <details>
+    <summary>Review the previous principle</summary>
+    <p>India is characterized by concentrated promoter ownership, creating a <em>Principal-Principal</em> tension (risk of controlling promoters tunneling profits away from minority shareholders). The US features widely dispersed ownership, creating a <em>Principal-Agent</em> tension (risk of entrenched managers enriching themselves at the expense of passive shareholders).</p>
+  </details>
+
+  <h2>1. The Bedrock Principle: Retained Accountability</h2>
+  <p>In modern organizations, work is continually delegated down: from shareholders to the board, from the board to the CEO, and from the CEO to staff. When software agents enter the workplace, they become another link in the delegation chain.</p>
+  <blockquote class="callout">
+    <strong>You can delegate execution; you cannot delegate away fiduciary accountability.</strong>
+  </blockquote>
+  <p>Under corporate law (such as India's Companies Act § 166 and § 134(5)(e)), directors and senior officers retain personal legal liability for maintaining effective internal controls and exercising reasonable care. Saying <em>"The autonomous agent made an unauthorized hallucinated decision"</em> is legally equivalent to saying <em>"A rogue employee made an unauthorized wire transfer because we had no internal controls."</em></p>
+
+  <h2>2. The 4-Pillar AI Governance Framework</h2>
+  <p>To safely integrate autonomous AI agents into an enterprise, organizations must translate governance principles into system architecture:</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Governance Pillar</th>
+        <th>Corporate Mechanism</th>
+        <th>AI Agent Implementation</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>1. Authorization &amp; Scope</strong></td>
+        <td>Delegated financial limits (e.g., CEO may approve purchases up to ₹5 lakh; Board approval above).</td>
+        <td><strong>Programmatic Boundary Controls:</strong> Strict hard caps on API calls, spending limits, permitted counterparty whitelists, and read-only vs. write permissions.</td>
+      </tr>
+      <tr>
+        <td><strong>2. Oversight &amp; Internal Controls</strong></td>
+        <td>Financial ledger audits, segregation of duties, internal audit reporting to Audit Committee.</td>
+        <td><strong>Continuous Telemetry &amp; Circuit Breakers:</strong> Immutable audit logs of model prompts and outputs, real-time drift detection, and automated kill-switches when error thresholds are crossed.</td>
+      </tr>
+      <tr>
+        <td><strong>3. Escalation Pathways</strong></td>
+        <td>Conflict-of-interest triggers routing related-party deals to independent directors for review.</td>
+        <td><strong>Human-in-the-Loop (HITL) Gateways:</strong> Automatic pausing and escalation whenever a transaction exceeds dollar caps, encounters low model confidence, or touches sensitive entities.</td>
+      </tr>
+      <tr>
+        <td><strong>4. Conflict Insulation</strong></td>
+        <td>Preventing controlling promoters or managers from tunneling funds through self-dealing.</td>
+        <td><strong>Objective Prompt Alignment &amp; Vendor Neutrality:</strong> Ensuring algorithms cannot be rigged or prompted to funnel enterprise business into undisclosed promoter or executive accounts.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>3. A Real-World Scenario: The Automated Procurement Agent</h2>
+  <p>Consider <strong>ProcureBot</strong>, an enterprise agent deployed to purchase cloud infrastructure and software licenses for a mid-sized fintech company:</p>
+  <ul>
+    <li><strong>Standard Policy:</strong> ProcureBot is authorized to autonomously negotiate and execute purchases up to ₹2 lakh from pre-approved vendors.</li>
+    <li><strong>Case A:</strong> ProcureBot receives a quote for ₹1.8 lakh from an approved vendor. It validates the cryptographic signature and budget, and executes the purchase. <em>(Valid delegated authority)</em></li>
+    <li><strong>Case B:</strong> A server spike requires a ₹15 lakh cloud expansion. ProcureBot negotiates a discounted rate but pauses execution, generating a structured briefing for the human CTO and CFO. <em>(Proper threshold escalation)</em></li>
+    <li><strong>Case C:</strong> ProcureBot discovers a new cloud hosting provider offering a 20% discount. The provider is registered to the company founder's son. Even though the invoice is only ₹1.5 lakh, ProcureBot's compliance module detects the related-party link and escalates it directly to the Audit Committee. <em>(Conflict override)</em></li>
+  </ul>
+
+  <h2 id="quiz">4. Diagnostic Capstone Quiz</h2>
+  <p>Apply the framework to these three critical delegation scenarios:</p>
+
+  <form data-quiz>
+    <fieldset data-answer="B" data-explanation="Delegating execution to an automated agent does not relieve directors or officers of their duty of care. Failing to set up basic risk boundaries and internal controls constitutes an oversight failure by company leadership.">
+      <legend>1. A fintech company deploys an AI agent to approve short-term working capital loans. Over three months, the agent approves ₹20 crore in unsecured loans to fraudulent shell entities due to an obvious prompt injection vulnerability that nobody tested. Who bears primary legal accountability under corporate governance?</legend>
+      <label><input type="radio" name="q1" value="A"> A. The AI foundation model developer, because software algorithms are legally fiduciaries.</label>
+      <label><input type="radio" name="q1" value="B"> B. The company's directors and executives, who breached their duty of care by failing to establish adequate internal controls and testing.</label>
+      <label><input type="radio" name="q1" value="C"> C. Nobody, because corporate law exempts technological experimental losses from governance liability.</label>
+      <p class="feedback" aria-live="polite"></p>
+    </fieldset>
+
+    <fieldset data-answer="C" data-explanation="A conflict of interest overrides routine financial delegation. Even if the transaction is well below the spending cap, related-party links must be escalated for independent review and disclosure.">
+      <legend>2. An AI procurement agent has a delegated autonomous spending cap of ₹5 lakh. It detects a ₹50,000 office supply order from a vendor whose beneficial owner is the sister of the Chief Operating Officer. What should the agent's governance logic trigger?</legend>
+      <label><input type="radio" name="q2" value="A"> A. Automatically approve the order since ₹50,000 is far below the ₹5 lakh spending limit.</label>
+      <label><input type="radio" name="q2" value="B"> B. Delete the purchase order and permanently ban the sister's company without human notification.</label>
+      <label><input type="radio" name="q2" value="C"> C. Halt autonomous execution and escalate the transaction for conflict-of-interest review under related-party procedures.</label>
+      <p class="feedback" aria-live="polite"></p>
+    </fieldset>
+
+    <fieldset data-answer="A" data-explanation="Effective internal controls require automated circuit breakers, anomaly detection, and human escalation pathways to prevent cascading failure before it threatens company solvency.">
+      <legend>3. Which mechanism best represents the corporate governance principle of 'Internal Controls and Risk Oversight' when designing an autonomous trading agent?</legend>
+      <label><input type="radio" name="q3" value="A"> A. Real-time rate limiters, stop-loss circuit breakers, and automated escalation to human risk managers when volatility thresholds are breached.</label>
+      <label><input type="radio" name="q3" value="B"> B. Letting the agent trade without constraints for 6 months to evaluate its unconstrained learning curve.</label>
+      <label><input type="radio" name="q3" value="C"> C. Instructing the agent to hide losing trades from quarterly financial statements.</label>
+      <p class="feedback" aria-live="polite"></p>
+    </fieldset>
+
+    <button type="submit">Check answers and explanations</button>
+    <p data-result aria-live="polite"></p>
+  </form>
+
+  <nav class="page-nav" aria-label="Lesson navigation">
+    <a href="0004-comparative-governance.html" rel="prev">← Previous: Comparative governance</a>
+    <a href="../index.html">Dashboard</a>
+    <span class="small">Course Complete · Review Flashcards</span>
+  </nav>
+</main>
+</body>
+</html>

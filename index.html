@@ -1,76 +1,250 @@
 <!doctype html>
 <html lang="en">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z56XV344LR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-Z56XV344LR');
+</script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#174e40">
-  <title>Governance · Learning dashboard</title>
+  <title>Agent Architecture &amp; Governance · Learning Workspace</title>
   <link rel="stylesheet" href="assets/course.css">
 </head>
 <body class="dashboard">
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="site-header">
   <nav class="site-nav" aria-label="Course navigation">
-    <a class="site-brand" href="index.html" aria-current="page">Governance<span class="brand-caption">Learning workspace</span></a>
-    <div class="nav-links"><a href="#lessons">Lessons</a><a href="reference/flashcards.html">Flashcards</a><a href="#references">Reference</a></div>
+    <a class="site-brand" href="index.html" aria-current="page">Governance</a>
+    <div class="nav-links">
+      <a href="#track-governance">Governance</a>
+      <a href="#track-agents">Architecture</a>
+      <a href="reference/deep-thinking.html">Dilemmas</a>
+      <a href="reference/flashcards.html">Flashcards</a>
+      <a href="#references">Reference</a>
+    </div>
   </nav>
 </header>
 <main id="main">
   <section class="dashboard-hero" aria-labelledby="welcome-title">
     <div>
-      <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> Corporate governance / Your learning workspace</p>
-      <h1 id="welcome-title">Understand power.<br><span>Connect the decisions.</span></h1>
-      <p class="hero-description">Understand who holds authority, how decisions are supervised, and who must answer for them. Build a foundation in corporate governance—then connect it to AI agents.</p>
-      <a class="button-link primary" href="lessons/0002-authority-before-votes.html">Continue learning <span aria-hidden="true">↗</span></a>
-      <p class="hero-caption">Up next: Lesson 02 · Authority before votes · 8 min</p>
+      <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> Two-Track Learning Journey</p>
+      <h1 id="welcome-title">Corporate Governance.<br><span>Then Agent Architecture.</span></h1>
+      <p class="hero-description">Understand who holds authority, how decisions are supervised, and who retains ultimate legal accountability. First master corporate governance fundamentals—then apply that foundation to architecting autonomous, resilient AI agent systems.</p>
+      <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+        <a class="button-link primary" href="lessons/0001-governance-map.html">Explore Governance Track <span aria-hidden="true">↗</span></a>
+        <a class="button-link" href="lessons/agent-02-tooling-and-sandboxing.html">Continue Architecture Track (A02) <span aria-hidden="true">→</span></a>
+      </div>
+      <p class="hero-caption">Track 1: Governance Foundations (Completed · 5/5) · Track 2: Agent Architecture (In progress · 1/5 completed)</p>
     </div>
     <aside class="review-card" aria-labelledby="review-title">
       <div class="card-topline"><span class="eyebrow">A little practice, lasting connections</span><span class="spark" aria-hidden="true">✳</span></div>
       <h2 id="review-title">Keep it fresh.</h2>
-      <p>A good deal doesn't erase a conflict. Can you explain what still needs to happen before the company proceeds?</p>
-      <p class="recall-summary"><strong>01</strong><span>principle to revisit</span></p>
+      <p>Can a board delegate fiduciary oversight to an algorithm or software vendor?</p>
+      <p class="recall-summary"><strong>07</strong><span>principles to revisit</span></p>
       <a class="button-link" href="reference/flashcards.html">Start a recall session <span aria-hidden="true">→</span></a>
       <p class="review-note">Try answering before you reveal. Review dates and quiz results are not saved automatically.</p>
     </aside>
   </section>
-  <section id="lessons" class="course-section" aria-labelledby="course-title">
-    <div class="section-heading"><div><p class="eyebrow">01 / The foundations</p><h2 id="course-title">Your learning path</h2></div><span class="section-note">Two lessons. A clearer picture of authority.</span></div>
+
+  <!-- Track 1: Corporate Governance Foundations -->
+  <section id="track-governance" class="course-section" aria-labelledby="gov-track-title">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">Track 01 / Prerequisite Foundations</p>
+        <h2 id="gov-track-title">Corporate Governance Foundations <span class="badge" style="vertical-align: middle; margin-left: 8px;">Completed · 5/5</span></h2>
+      </div>
+      <span class="section-note">5 lessons completed with 100% precision. Reference library open.</span>
+    </div>
     <div class="lesson-grid">
       <article class="lesson-card">
-        <div class="card-topline"><span class="lesson-number">01</span><span class="badge">Foundations · 12 min</span></div>
-        <h3>Who may decide—and who must answer?</h3><p>Governance, management, and the company authority map. Compare other systems with India.</p>
+        <div class="card-topline"><span class="lesson-number">01</span><span class="badge">Completed · 12 min</span></div>
+        <h3>Who may decide—and who must answer?</h3>
+        <p>Governance, management, and the company authority map. Compare other systems with India.</p>
         <div class="lesson-topics"><span>Authority</span><span>Oversight</span><span>Accountability</span></div>
-        <a class="lesson-link" href="lessons/0001-governance-map.html">Explore lesson <span aria-hidden="true">↗</span></a>
+        <a class="lesson-link" href="lessons/0001-governance-map.html">Review lesson <span aria-hidden="true">↗</span></a>
       </article>
-      <article class="lesson-card next-lesson">
-        <div class="card-topline"><span class="lesson-number">02</span><span class="badge">Up next · 8 min</span></div>
-        <h3>Authority comes before votes</h3><p>Separate ownership power, board decisions, and delegated management authority.</p>
+      <article class="lesson-card">
+        <div class="card-topline"><span class="lesson-number">02</span><span class="badge">Completed · 8 min</span></div>
+        <h3>Authority comes before votes</h3>
+        <p>Separate ownership power, board decisions, and delegated management authority.</p>
         <div class="lesson-topics"><span>Delegation</span><span>Conflicts</span><span>Board votes</span></div>
-        <a class="lesson-link" href="lessons/0002-authority-before-votes.html">Start lesson <span aria-hidden="true">→</span></a>
+        <a class="lesson-link" href="lessons/0002-authority-before-votes.html">Review lesson <span aria-hidden="true">↗</span></a>
+      </article>
+      <article class="lesson-card">
+        <div class="card-topline"><span class="lesson-number">03</span><span class="badge">Completed · 10 min</span></div>
+        <h3>Fiduciary duties &amp; board committees</h3>
+        <p>Duty of care vs loyalty, independent directors, and the role of the Audit Committee.</p>
+        <div class="lesson-topics"><span>Duty of Care</span><span>Duty of Loyalty</span><span>Audit Committee</span></div>
+        <a class="lesson-link" href="lessons/0003-fiduciary-duties-and-committees.html">Review lesson <span aria-hidden="true">↗</span></a>
+      </article>
+      <article class="lesson-card">
+        <div class="card-topline"><span class="lesson-number">04</span><span class="badge">Completed · 10 min</span></div>
+        <h3>Comparative corporate governance</h3>
+        <p>Compare India with the US, UK, Germany, and Japan without simplistic binaries.</p>
+        <div class="lesson-topics"><span>Unitary vs Dual</span><span>Promoter vs Manager</span><span>Comply or Explain</span></div>
+        <a class="lesson-link" href="lessons/0004-comparative-governance.html">Review lesson <span aria-hidden="true">↗</span></a>
+      </article>
+      <article class="lesson-card">
+        <div class="card-topline"><span class="lesson-number">05</span><span class="badge">Completed · 12 min</span></div>
+        <h3>Delegating to AI agents</h3>
+        <p>Apply authority, internal controls, conflict triggers, and retained legal accountability to autonomous systems.</p>
+        <div class="lesson-topics"><span>Retained Accountability</span><span>Telemetry &amp; Controls</span><span>HITL Escalation</span></div>
+        <a class="lesson-link" href="lessons/0005-ai-agent-governance.html">Review capstone <span aria-hidden="true">↗</span></a>
       </article>
     </div>
   </section>
+
+  <!-- Track 2: AI Agent Architecture Design -->
+  <section id="track-agents" class="course-section" aria-labelledby="agent-track-title">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">Track 02 / Systems Engineering</p>
+        <h2 id="agent-track-title">AI Agent Architecture Design <span class="badge" style="vertical-align: middle; margin-left: 8px;">In progress · 1/5</span></h2>
+      </div>
+      <span class="section-note">1 of 5 lessons completed · Lesson A02 up next · Grounded in governance principles.</span>
+    </div>
+    <div class="lesson-grid">
+      <article class="lesson-card">
+        <div class="card-topline"><span class="lesson-number">A01</span><span class="badge">Completed · 12 min</span></div>
+        <h3>The Cognitive Core: Loops &amp; State Machines</h3>
+        <p>Single-shot vs. ReAct vs. FSM. State transitions and step budgets. <em>⟷ Cross-references Delegated Authority Limits (Lesson 02).</em></p>
+        <div class="lesson-topics"><span>Agent Loops</span><span>FSM State</span><span>Delegated Limits</span></div>
+        <a class="lesson-link" href="lessons/agent-01-core-loop-and-state.html">Review lesson <span aria-hidden="true">↗</span></a>
+      </article>
+      <article class="lesson-card next-lesson">
+        <div class="card-topline"><span class="lesson-number">A02</span><span class="badge">Up next · 12 min</span></div>
+        <h3>Tooling, Sandboxing &amp; Protocol Design</h3>
+        <p>JSON Schemas, capability-based security, and idempotency. <em>⟷ Cross-references Segregation of Duties (Lesson 01 &amp; 02).</em></p>
+        <div class="lesson-topics"><span>Tool Calling</span><span>Sandboxing</span><span>Segregation of Duties</span></div>
+        <a class="lesson-link" href="lessons/agent-02-tooling-and-sandboxing.html">Start lesson <span aria-hidden="true">→</span></a>
+      </article>
+      <article class="lesson-card">
+        <div class="card-topline"><span class="lesson-number">A03</span><span class="badge">Planned · 15 min</span></div>
+        <h3>Memory Systems &amp; Context Retrieval</h3>
+        <p>Context compaction, scratchpads, and persistent vector state. <em>⟷ Cross-references Corporate Records &amp; Due Diligence (Lesson 03).</em></p>
+        <div class="lesson-topics"><span>Working Memory</span><span>Persistent State</span><span>Audit Logs</span></div>
+        <span class="lesson-link small" style="opacity: 0.7;">Coming next</span>
+      </article>
+      <article class="lesson-card">
+        <div class="card-topline"><span class="lesson-number">A04</span><span class="badge">Planned · 15 min</span></div>
+        <h3>Multi-Agent Topologies &amp; Orchestration</h3>
+        <p>Leader-worker, supervisor-verifier, and deadlock avoidance. <em>⟷ Cross-references German Two-Tier Oversight (Lesson 04).</em></p>
+        <div class="lesson-topics"><span>Topologies</span><span>Two-Tier Supervisor</span><span>Deadlocks</span></div>
+        <span class="lesson-link small" style="opacity: 0.7;">Coming next</span>
+      </article>
+      <article class="lesson-card">
+        <div class="card-topline"><span class="lesson-number">A05</span><span class="badge">Planned · 12 min</span></div>
+        <h3>Enterprise Guardrails, HITL &amp; Telemetry</h3>
+        <p>Policy engines (Cedar/OPA), circuit breakers, and OpenTelemetry. <em>⟷ Cross-references Retained Fiduciary Accountability (Lesson 05).</em></p>
+        <div class="lesson-topics"><span>Policy Engines</span><span>HITL Gateways</span><span>Retained Liability</span></div>
+        <span class="lesson-link small" style="opacity: 0.7;">Coming next</span>
+      </article>
+    </div>
+  </section>
+
   <div class="dashboard-bottom">
     <section aria-labelledby="route-title">
-      <p class="eyebrow">The bigger picture</p><h2 id="route-title">Where we're headed</h2>
+      <p class="eyebrow">The bigger picture</p>
+      <h2 id="route-title">Learning Journey Roadmaps</h2>
+
+      <!-- Track 1 Roadmap: Corporate Governance -->
+      <h3 style="font-size: 1rem; margin: 1.5rem 0 1rem; color: var(--accent); font-weight: 700;">Track 1: Corporate Governance Roadmap</h3>
+      <ol class="roadmap" style="margin-bottom: 2rem;">
+        <li>
+          <span class="route-marker" aria-hidden="true">01</span>
+          <div>
+            <h3>Governance Foundations <span class="text-badge">Completed</span></h3>
+            <p>Governance vs. management, company separateness, and the core authority map.</p>
+          </div>
+        </li>
+        <li>
+          <span class="route-marker" aria-hidden="true">02</span>
+          <div>
+            <h3>Authority Before Votes <span class="text-badge">Completed</span></h3>
+            <p>Delegation thresholds, conflict overrides, and separating board votes from share ownership.</p>
+          </div>
+        </li>
+        <li>
+          <span class="route-marker" aria-hidden="true">03</span>
+          <div>
+            <h3>Fiduciary Duties &amp; Committees <span class="text-badge">Completed</span></h3>
+            <p>Duty of Care vs. Loyalty, independent directors, and Audit Committee oversight of related-party deals.</p>
+          </div>
+        </li>
+        <li>
+          <span class="route-marker" aria-hidden="true">04</span>
+          <div>
+            <h3>Comparative Governance Models <span class="text-badge">Completed</span></h3>
+            <p>India (promoter blockholders) vs. US (dispersed), UK (comply or explain), and Germany (two-tier co-determination).</p>
+          </div>
+        </li>
+        <li>
+          <span class="route-marker" aria-hidden="true">05</span>
+          <div>
+            <h3>Retained Accountability in Delegation <span class="text-badge">Completed</span></h3>
+            <p>Delegating execution to managers and systems while retaining ultimate fiduciary oversight.</p>
+          </div>
+        </li>
+      </ol>
+
+      <!-- Track 2 Roadmap: AI Agent Architecture -->
+      <h3 style="font-size: 1rem; margin: 1.5rem 0 1rem; color: var(--accent); font-weight: 700;">Track 2: AI Agent Architecture Roadmap</h3>
       <ol class="roadmap">
-        <li><span class="route-marker" aria-hidden="true">01</span><div><h3>Governance foundations <span class="text-badge">Start here</span></h3><p>Governance, management, authority, and accountability.</p></div></li>
-        <li><span class="route-marker" aria-hidden="true">02</span><div><h3>Governance in practice <span class="text-badge">Building next</span></h3><p>Boards, committees, duties, controls, and conflicts.</p></div></li>
-        <li><span class="route-marker" aria-hidden="true">03</span><div><h3>Compare across borders <span class="text-badge">Planned</span></h3><p>India as the reference point for the US, UK, Germany, Japan, and China. Detailed Chinese-law comparison awaits source verification.</p></div></li>
-        <li><span class="route-marker" aria-hidden="true">04</span><div><h3>Delegation &amp; AI agents <span class="text-badge">Planned</span></h3><p>Authorization, monitoring, escalation, and retained accountability. Apply the foundations before designing the guardrails.</p></div></li>
+        <li>
+          <span class="route-marker" aria-hidden="true">A1</span>
+          <div>
+            <h3>The Cognitive Core <span class="text-badge">Completed</span></h3>
+            <p>Single-shot vs. ReAct vs. FSM, deterministic state machines, step budgets, and loop deduplication.</p>
+          </div>
+        </li>
+        <li>
+          <span class="route-marker" aria-hidden="true">A2</span>
+          <div>
+            <h3>Tooling &amp; Sandboxes <span class="text-badge">Up next · Lesson A02</span></h3>
+            <p>JSON Schema validation, capability-based security, isolated runtimes, and side-effect idempotency.</p>
+          </div>
+        </li>
+        <li>
+          <span class="route-marker" aria-hidden="true">A3</span>
+          <div>
+            <h3>Memory Systems &amp; Context <span class="text-badge">Planned · Lesson A03</span></h3>
+            <p>Context window compaction, structured scratchpads, and persistent episodic/semantic vector retrieval.</p>
+          </div>
+        </li>
+        <li>
+          <span class="route-marker" aria-hidden="true">A4</span>
+          <div>
+            <h3>Multi-Agent Topologies <span class="text-badge">Planned · Lesson A04</span></h3>
+            <p>Hierarchical leader-worker, blackboard systems, inter-agent protocols, and deadlock avoidance.</p>
+          </div>
+        </li>
+        <li>
+          <span class="route-marker" aria-hidden="true">A5</span>
+          <div>
+            <h3>Enterprise Guardrails &amp; Telemetry <span class="text-badge">Planned · Lesson A05</span></h3>
+            <p>Policy enforcement engines (Cedar/OPA), circuit breakers, HITL gateways, and OpenTelemetry tracing.</p>
+          </div>
+        </li>
       </ol>
     </section>
     <section id="references" class="shelf" aria-labelledby="shelf-title">
       <p class="eyebrow">Good to have nearby</p><h2 id="shelf-title">Your reference shelf</h2>
       <ul class="resource-list">
+        <li><a href="reference/deep-thinking.html"><span>Governance &amp; Architectural Dilemmas<small>Deep thinking across both tracks · No easy answers</small></span><span aria-hidden="true">↗</span></a></li>
         <li><a href="reference/governance-basics.html"><span>Roles &amp; terminology<small>Working glossary · 01</small></span><span aria-hidden="true">↗</span></a></li>
         <li><a href="reference/authority-check.html"><span>The authority check<small>Decision aid · 02</small></span><span aria-hidden="true">↗</span></a></li>
-        <li><a href="reference/flashcards.html"><span>Conflicts: managed, not erased<small>Recall practice · 1 card</small></span><span aria-hidden="true">↗</span></a></li>
+        <li><a href="reference/flashcards.html"><span>Flashcards library<small>Recall practice · 7 cards</small></span><span aria-hidden="true">↗</span></a></li>
       </ul>
-      <details class="course-notes"><summary>Course mission &amp; primary sources</summary><ul><li><a href="MISSION.md">Learning mission</a></li><li><a href="RESOURCES.md">Curated primary sources &amp; research gaps</a></li></ul><p>Sources include India's Companies Act, Delaware law, the UK and German governance codes, and Japan Exchange Group materials.</p></details>
+      <details class="course-notes"><summary>Course mission &amp; primary sources</summary><ul><li><a href="mission.html">Learning mission</a></li><li><a href="resources.html">Curated primary sources &amp; research gaps</a></li></ul><p>Sources include India's Companies Act, Delaware law, UK &amp; German codes, and systems engineering standards.</p></details>
     </section>
   </div>
-  <footer class="dashboard-footer"><strong>Governance learning</strong><p>Learn. Practise. Question. Revisit. Ask your teacher for clarification or the next lesson. Educational material, not legal advice.</p></footer>
+  <footer class="dashboard-footer"><strong>Agent Architecture &amp; Governance Learning</strong><p>Learn. Practise. Question. Revisit. Educational material and systems engineering guides.</p></footer>
 </main>
 </body>
 </html>

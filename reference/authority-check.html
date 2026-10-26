@@ -1,1 +1,100 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Authority before votes · Quick reference</title><link rel="stylesheet" href="../assets/course.css"></head><body><a class="skip-link" href="#main">Skip to content</a><header class="site-header"><nav class="site-nav" aria-label="Course navigation"><a class="site-brand" href="../index.html">Governance learning</a><div class="nav-links"><a href="../index.html#lessons">Lessons</a><a href="../index.html#references">References</a><a href="flashcards.html">Flashcards</a></div></nav></header><main id="main"><p class="eyebrow">Reference 02</p><h1>Authority before votes</h1><p class="callout">First identify who may decide. Then determine how that person or body must decide. Check substantive lawfulness as well.</p><ol><li><strong>Classify the action.</strong> What is being authorized: a routine purchase, borrowing, a major transaction, or something else?</li><li><strong>Check sources and limits of authority.</strong> Applicable law and rules, company constitutional documents, reserved matters, board decisions, and valid delegations. An internal policy cannot override the law.</li><li><strong>Check special triggers.</strong> Conflicts, related parties, amount, budget, and any required committee or shareholder approval. More than one approval may be necessary.</li><li><strong>Follow the correct process.</strong> Information, notice, quorum, eligible participation, voting, records, and disclosures as applicable. Quorum and voting threshold are different concepts.</li><li><strong>Do not confuse the hats.</strong> Ownership rights, a director's vote, and executive authority are different. A 60% shareholding does not automatically mean 60% of board votes.</li></ol><p>This is a reasoning aid, not a complete compliance checklist or legal opinion. Decision-process integrity and commercial merits are separate questions.</p><h2>India source</h2><p><a href="https://www.indiacode.nic.in/bitstream/123456789/2114/5/A2013-18.pdf">Companies Act 2013</a>: sections 173–175 (meetings, quorum, circulation), 179 (powers and limits), and 180 (specified restrictions). Applicable rules and exceptions must also be checked.</p><p><a href="../lessons/0002-authority-before-votes.html">Lesson 02: scenarios and practice</a> · <a href="governance-basics.html">Working glossary</a></p><nav class="page-nav" aria-label="Reference navigation"><a href="governance-basics.html">← Previous reference: Glossary</a><a href="../index.html#references">Review library</a><a href="flashcards.html">Review flashcards →</a></nav></main></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z56XV344LR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-Z56XV344LR');
+</script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Authority Check · Governance &amp; AI Systems</title>
+  <link rel="stylesheet" href="../assets/course.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <nav class="site-nav" aria-label="Course navigation">
+    <a class="site-brand" href="../index.html">Governance</a>
+    <div class="nav-links">
+      <a href="../index.html#track-governance">Governance</a>
+      <a href="../index.html#track-agents">Architecture</a>
+      <a href="deep-thinking.html">Dilemmas</a>
+      <a href="flashcards.html">Flashcards</a>
+      <a href="../index.html#references">Reference</a>
+    </div>
+  </nav>
+</header>
+<main id="main">
+  <p class="eyebrow">Reference 02 · Decision Aid</p>
+  <h1>The Authority Check: From Boardrooms to AI Agents</h1>
+  <p class="callout">First identify who may decide. Then determine how that person or body must decide. Check substantive lawfulness as well.</p>
+
+  <h2>Part 1: The 5-Step Corporate Authority Check</h2>
+  <ol>
+    <li><strong>Classify the action:</strong> What is being authorized: a routine purchase, debt borrowing, a major acquisition, or a related-party deal?</li>
+    <li><strong>Check sources and limits of authority:</strong> Applicable law (Companies Act), articles of association, reserved matters, board resolutions, and valid delegations. An internal company policy cannot legalize an act prohibited by law.</li>
+    <li><strong>Check special triggers:</strong> Conflicts of interest, related parties, monetary thresholds, budget limits, and mandatory committee or shareholder approvals. More than one approval may be required.</li>
+    <li><strong>Follow the correct process:</strong> Notice, information pack, quorum, eligible participation, voting thresholds, and formal minutes. Quorum and voting threshold are distinct legal concepts.</li>
+    <li><strong>Do not confuse the hats:</strong> Ownership rights, a director's board vote, and executive authority are distinct. A 60% shareholding does not turn 1 board vote into 60% of board votes.</li>
+  </ol>
+
+  <h2>Part 2: Direct Translation to AI Agent Systems Architecture</h2>
+  <p>When building enterprise agent workflows, the corporate authority check translates directly into systems engineering guardrails:</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Corporate Step</th>
+        <th>Corporate Legal Rule</th>
+        <th>Agent Systems Architecture Implementation</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>1. Classify Action</strong></td>
+        <td>Distinguish routine operational expense from strategic corporate commitments.</td>
+        <td><strong>Tool Capability Classification:</strong> Strictly isolate Read-Only tools (search, DB queries) from Destructive/Mutating tools (payment APIs, database writes, git pushes).</td>
+      </tr>
+      <tr>
+        <td><strong>2. Check Limits</strong></td>
+        <td>Management acts within formal financial delegations (e.g., CEO limit ₹5 lakh).</td>
+        <td><strong>Programmatic Boundary Controls:</strong> Hard caps on token budgets, API request rate limiters, spending quotas, and whitelisted counterparty domains.</td>
+      </tr>
+      <tr>
+        <td><strong>3. Special Triggers</strong></td>
+        <td>A related-party deal suspends routine delegation and escalates to Audit Committee.</td>
+        <td><strong>Automated Policy Interceptors:</strong> If an agent detects a conflict, low confidence score, or high dollar amount, execution is halted and routed to a Human-in-the-Loop (HITL) gateway.</td>
+      </tr>
+      <tr>
+        <td><strong>4. Correct Process</strong></td>
+        <td>A board vote is void without notice, quorum, and statutory minutes.</td>
+        <td><strong>Pre-Execution Invariants:</strong> The agent cannot call tools unless input parameters pass strict Pydantic/JSON Schema validation and idempotency key verification.</td>
+      </tr>
+      <tr>
+        <td><strong>5. Hat Separation</strong></td>
+        <td>Promoter ownership does not override fiduciary board duties.</td>
+        <td><strong>Retained Accountability:</strong> The agent executes tasks; human directors and executive sponsors retain non-delegable legal liability for outcomes.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>India Statutory Reference</h2>
+  <p><a href="https://www.indiacode.nic.in/bitstream/123456789/2114/5/A2013-18.pdf">Companies Act 2013</a>: sections 166 (duties), 173–175 (meetings, quorum, circulation), 177 (Audit Committee), 179 (board powers), and 180 (restrictions on board powers).</p>
+
+  <nav class="page-nav" aria-label="Reference navigation">
+    <a href="governance-basics.html">← Previous: Working Glossary</a>
+    <a href="../index.html">Dashboard</a>
+    <a href="deep-thinking.html">Explore Deep Thinking Dilemmas →</a>
+  </nav>
+</main>
+<footer class="dashboard-footer">
+  <strong>Governance &amp; Agent Architecture Learning</strong>
+  <p>Educational material and systems engineering guides.</p>
+</footer>
+</body>
+</html>

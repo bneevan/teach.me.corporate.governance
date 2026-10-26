@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z56XV344LR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-Z56XV344LR');
+</script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>A02 · Tooling, Sandboxing &amp; Protocol Design</title>
+  <link rel="stylesheet" href="../assets/course.css">
+  <script defer src="../assets/quiz.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <nav class="site-nav" aria-label="Course navigation">
+    <a class="site-brand" href="../index.html">Governance</a>
+    <div class="nav-links">
+      <a href="../index.html#track-governance">Governance</a>
+      <a href="../index.html#track-agents">Architecture</a>
+      <a href="../reference/deep-thinking.html">Dilemmas</a>
+      <a href="../reference/flashcards.html">Flashcards</a>
+      <a href="../index.html#references">Reference</a>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+  <p class="eyebrow">Architecture Track · Lesson A02 · About 12 minutes</p>
+  <h1>Tooling, Sandboxing &amp; Protocol Design</h1>
+  <div class="callout">
+    <strong>Your tangible win:</strong> design secure, reliable agentic tool execution pipelines using strict JSON Schema contracts, capability-based isolation, idempotency keys, and sandboxing—grounded in the corporate governance principles of <strong>Segregation of Duties</strong> and <strong>Procedural Authority Limits</strong>.
+  </div>
+
+  <h2>First, retrieve—not reread</h2>
+  <p>From memory: in <a href="0001-governance-map.html">Lesson 01</a> and <a href="0002-authority-before-votes.html">Lesson 02</a>, why does corporate governance strictly forbid a single person from both generating financial invoices and approving bank wire disbursements? What is this principle called?</p>
+  <details>
+    <summary>Review the Governance Principle</summary>
+    <p>This is the <strong>Segregation of Duties (SoD)</strong>. Combining initiation, authorization, custody, and reconciliation in a single role creates unmanageable agency risk, fraud opportunities, and unmonitored error propagation. In agent systems, giving an LLM a single unconstrained tool (like an arbitrary bash terminal or unauthenticated database writer) creates the identical structural failure mode.</p>
+  </details>
+
+  <h2>1. What Is a "Tool" to an LLM?</h2>
+  <p>An LLM does not execute software code directly. When an agent "uses a tool", it is participating in a structured protocol across four distinct steps:</p>
+  <ol>
+    <li><strong>Declaration:</strong> The host application provides tool definitions in the system prompt formatted as JSON Schemas (specifying the function name, description, and strongly typed parameter objects).</li>
+    <li><strong>Model Emission:</strong> Rather than emitting natural language text, the LLM generates a structured JSON payload targeting a specific tool: <code>{"name": "fetch_balance", "arguments": {"account_id": "ACC-904"}}</code>.</li>
+    <li><strong>Deterministic Validation &amp; Execution:</strong> The host application (not the model) parses the arguments, checks authorization permissions, executes the native Python/Go code inside an isolated environment, and captures the output.</li>
+    <li><strong>Observation Injection:</strong> The host app serializes the tool result into a message with role <code>tool</code> (or <code>observation</code>) and returns it to the model's context window for the next reasoning step.</li>
+  </ol>
+
+  <blockquote class="callout">
+    <strong>Key Architectural Reality:</strong> The model merely proposes an action payload; the host runtime retains complete sovereign authority over whether, where, and how that action executes.
+  </blockquote>
+
+  <h2>2. JSON Schema Contracts: Rejecting Hallucinations at the Boundary</h2>
+  <p>Unconstrained string inputs are a primary source of agent failure. If a tool accepts arbitrary strings without validation, the model will inevitably inject malformed parameters, SQL injections, or hallucinated enum values.</p>
+  <p>Production agent architectures enforce <strong>Pydantic</strong> or <strong>JSON Schema</strong> validation at the API gateway before the tool implementation is ever touched:</p>
+
+  <pre><code># Example: Strict schema contract using Pydantic
+from pydantic import BaseModel, Field, conint
+from enum import Enum
+
+class TransferPriority(str, Enum):
+    STANDARD = "standard"
+    EXPEDITED = "expedited"
+
+class WireTransferInput(BaseModel):
+    destination_iban: str = Field(..., regex=r"^[A-Z]{2}\d{2}[A-Z0-9]{1,30}$", description="Valid ISO IBAN")
+    amount_cents: conint(gt=0, le=5000000) = Field(..., description="Amount in USD cents (Max $50,000 per tx)")
+    currency: str = Field("USD", regex=r"^USD$", description="Supported currency code")
+    priority: TransferPriority = TransferPriority.STANDARD
+    idempotency_key: str = Field(..., min_length=36, max_length=36, description="Client-generated UUID v4")
+  </code></pre>
+
+  <p>If the model outputs <code>amount_cents: -500</code> or <code>currency: "EUR"</code>, the host runtime immediately intercepts the schema violation and feeds back a structured error message to the model (<em>"ValidationError: amount_cents must be &gt; 0"</em>) without executing any external side effects.</p>
+
+  <h2>3. Translating Segregation of Duties into Agent Capabilities</h2>
+  <p>In enterprise governance, internal controls divide workflows into distinct roles so no single entity can initiate and finalize a material commitment without independent scrutiny (<a href="0003-fiduciary-duties-and-committees.html">Lesson 03</a>). In agent systems, this principle governs tool permissions.</p>
+
+  <table class="course-table">
+    <thead>
+      <tr>
+        <th>Corporate Governance Control</th>
+        <th>Agent Architectural Counterpart</th>
+        <th>Concrete System Implementation</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Segregation of Duties (SoD)</strong></td>
+        <td>Read vs. Mutate Tool Separation</td>
+        <td>Separate inquiry tools (<code>read_ledger</code>) from execution tools (<code>execute_payout</code>). An agent drafting transactions cannot possess write credentials.</td>
+      </tr>
+      <tr>
+        <td><strong>Delegated Financial Limits</strong></td>
+        <td>Hard Parameter Ceilings</td>
+        <td>Strict bounds in tool schemas (e.g. <code>max_budget = $5,000</code>). Transactions above the threshold automatically require human confirmation.</td>
+      </tr>
+      <tr>
+        <td><strong>Dual-Key / Four-Eyes Principle</strong></td>
+        <td>Multi-Agent Approval Gate</td>
+        <td>A "Proposer Agent" generates the transaction payload; a distinct "Auditor Agent" with an independent prompt and schema verifies compliance before release.</td>
+      </tr>
+      <tr>
+        <td><strong>Statutory Audit Trail</strong></td>
+        <td>Immutable Tool Call Logs</td>
+        <td>Logging raw prompt, model output JSON, input args, executed bytecode hash, timestamp, and host response to a write-only log sink.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>4. Idempotency Keys: Solving the Network Blindspot</h2>
+  <p>One of the most dangerous failure modes in autonomous systems is the <strong>Network Blindspot</strong>:</p>
+  <ol>
+    <li>The agent calls <code>charge_credit_card(user_id=12, amount=100)</code>.</li>
+    <li>The payment gateway successfully debits $100 from the user's account.</li>
+    <li>However, before the gateway returns <code>HTTP 200 OK</code>, the network drops or times out.</li>
+    <li>The agent receives an <code>HTTP 504 Gateway Timeout</code> error.</li>
+    <li>Seeing an error, the agent's ReAct loop retries the tool call: <code>charge_credit_card(user_id=12, amount=100)</code>.</li>
+    <li>The customer is billed twice.</li>
+  </ol>
+
+  <div class="callout">
+    <strong>The Architectural Fix: Mandatory Idempotency Keys.</strong><br>
+    Every mutating tool interface must require a client-generated <code>idempotency_key</code> (typically a deterministic UUID generated from the plan step ID or session hash). When the gateway receives a retry with the same key, it returns the cached original result instead of executing the charge again.
+  </div>
+
+  <h2>5. Capability-Based Sandboxing &amp; Blast Radius Containment</h2>
+  <p>If an agent generates and executes shell commands, code scripts, or file edits, executing them in the host application's native environment is an unacceptable security failure. Enterprise agents use a hierarchy of sandboxing environments to contain the blast radius:</p>
+
+  <pre class="ascii-diagram">
+┌──────────────────────────────────────────────────────────────────┐
+│                   AGENT HOST RUNTIME (CONTROL PLANE)             │
+│                                                                  │
+│  ┌───────────────┐     Tool Call Request      ┌───────────────┐  │
+│  │  LLM Planner  ├───────────────────────────►│  Tool Gateway │  │
+│  └───────────────┘  {"name":"run_code", ...}  └───────┬───────┘  │
+└───────────────────────────────────────────────────────┼──────────┘
+                                                        │
+                      1. Schema &amp; Authority Check       ▼
+                                                ┌───────────────┐
+                                                │ Policy Engine │
+                                                └───────┬───────┘
+                                                        │
+                      2. Spawns Ephemeral Sandbox       ▼
+┌──────────────────────────────────────────────────────────────────┐
+│             ISOLATED SANDBOX WORKSPACE (DATA PLANE)              │
+│                                                                  │
+│   ┌──────────────────────────────────────────────────────────┐   │
+│   │ Ephemeral MicroVM / Container (Docker / gVisor / Firecracker)│
+│   │                                                          │   │
+│   │ • No access to host OS files or credentials              │   │
+│   │ • Read-only root filesystem; scratch volume in /tmp      │   │
+│   │ • Network egress locked to explicit domain whitelists    │   │
+│   │ • CPU &amp; RAM hard cgroups (Max 1 vCPU, 512MB RAM)         │   │
+│   │ • Wall-clock execution timeout (e.g., hard kill @ 10s)   │   │
+│   └──────────────────────────────────────────────────────────┘   │
+└──────────────────────────────────────────────────────────────────┘
+  </pre>
+
+  <h3>The Three Golden Rules of Agent Sandboxing</h3>
+  <ul>
+    <li><strong>1. Ephemeral Workspaces:</strong> Spin up fresh, clean sandbox environments per session or per task, and tear them down immediately upon task completion so malicious scripts cannot persist across user sessions.</li>
+    <li><strong>2. Network Egress Filtering:</strong> By default, disable all public internet access inside code execution sandboxes. Only whitelist the precise API endpoints required for the task to prevent data exfiltration.</li>
+    <li><strong>3. Resource Hard Limits:</strong> Impose strict kernel-level limits (cgroups) on memory, CPU, and execution duration (e.g. <code>timeout 10s</code>) to prevent fork-bombs and runaway infinite loops from exhausting server hardware.</li>
+  </ul>
+
+  <h2 id="quiz">6. Architecture Diagnostic Scenarios</h2>
+  <p>Test your systems engineering understanding on these real-world tool execution scenarios:</p>
+
+  <form data-quiz>
+    <fieldset data-answer="B" data-explanation="An idempotency key ensures that if a tool call times out or fails over the wire after the server has processed the action, subsequent retries return the original result rather than executing duplicate mutating actions.">
+      <legend>1. An agent executing a wire transfer experiences a network timeout after sending the API request. Which architectural pattern guarantees the customer will not be billed twice when the agent retries?</legend>
+      <label><input type="radio" name="q1" value="A"> A. Increasing the HTTP timeout from 10 seconds to 60 seconds.</label>
+      <label><input type="radio" name="q1" value="B"> B. Attaching a unique, deterministic idempotency key to the request payload that the payment server tracks.</label>
+      <label><input type="radio" name="q1" value="C"> C. Asking the LLM to inspect the customer's transaction history using natural language before retrying.</label>
+      <p class="feedback" aria-live="polite"></p>
+    </fieldset>
+
+    <fieldset data-answer="C" data-explanation="Segregation of duties requires separating the role that drafts and prepares a transaction from the role that authorizes or executes it, preventing single-agent compromise or unchecked hallucination.">
+      <legend>2. In an autonomous corporate procurement system, what is the most robust implementation of 'Segregation of Duties' between agents?</legend>
+      <label><input type="radio" name="q2" value="A"> A. Giving a single agent both 'create_purchase_order' and 'release_payment' tools in its system prompt.</label>
+      <label><input type="radio" name="q2" value="B"> B. Telling the agent in its system prompt to 'please think carefully before executing payouts'.</label>
+      <label><input type="radio" name="q2" value="C"> C. Granting Agent A only read/drafting tools, while Agent B (or a human manager) independently validates the purchase order and holds the credentials for the payment tool.</label>
+      <p class="feedback" aria-live="polite"></p>
+    </fieldset>
+
+    <fieldset data-answer="A" data-explanation="Running arbitrary LLM-generated code in the host process exposes environment variables, credentials, and host files. Isolated microVMs or containers with egress filtering restrict the blast radius.">
+      <legend>3. Why is running an LLM-generated Python script directly using Python's native `exec()` function in your main backend application considered an architectural disaster?</legend>
+      <label><input type="radio" name="q3" value="A"> A. The script has unrestricted access to host memory, environment variables (API keys/secrets), host filesystem, and network sockets.</label>
+      <label><input type="radio" name="q3" value="B"> B. Because `exec()` cannot parse Python 3 syntax.</label>
+      <label><input type="radio" name="q3" value="C"> C. Because LLM-generated code is always syntactically invalid.</label>
+      <p class="feedback" aria-live="polite"></p>
+    </fieldset>
+
+    <button type="submit">Check answers and explanations</button>
+    <p data-result aria-live="polite"></p>
+  </form>
+
+  <nav class="page-nav" aria-label="Lesson navigation">
+    <a href="agent-01-core-loop-and-state.html">← Previous: A01 Core Loops &amp; State</a>
+    <a href="../index.html">Dashboard</a>
+    <span class="small">Next: Lesson A03 (Memory Systems &amp; Context Retrieval)</span>
+  </nav>
+</main>
+
+<footer class="dashboard-footer">
+  <strong>AI Agent Architecture Series</strong>
+  <p>Systems engineering, state machines, and safe autonomous control loops.</p>
+</footer>
+</body>
+</html>

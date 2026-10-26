@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z56XV344LR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-Z56XV344LR');
+</script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>A01 · Agent Loops &amp; State Machines</title>
+  <link rel="stylesheet" href="../assets/course.css">
+  <script defer src="../assets/quiz.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <nav class="site-nav" aria-label="Course navigation">
+    <a class="site-brand" href="../index.html">Governance</a>
+    <div class="nav-links">
+      <a href="../index.html#track-governance">Governance</a>
+      <a href="../index.html#track-agents">Architecture</a>
+      <a href="../reference/deep-thinking.html">Dilemmas</a>
+      <a href="../reference/flashcards.html">Flashcards</a>
+      <a href="../index.html#references">Reference</a>
+    </div>
+  </nav>
+</header>
+<main id="main">
+  <p class="eyebrow">Architecture Track · Lesson A01 · About 12 minutes</p>
+  <h1>The Cognitive Core: Agent Loops &amp; State Machines</h1>
+  <div class="callout">
+    <strong>Your tangible win:</strong> design an agentic execution loop that transitions deterministically between perception, reasoning, and tool action—grounded in the corporate governance principles of delegated authority and procedural validity.
+  </div>
+
+  <h2>First, retrieve—not reread</h2>
+  <p>From memory: in <a href="0002-authority-before-votes.html">Lesson 02</a>, why does a company require that a valid decision follow three sequential questions (<em>Who may decide? How must they decide? Is it substantively lawful?</em>) rather than jumping straight to taking a vote?</p>
+  <details>
+    <summary>Review the Governance Principle</summary>
+    <p>A vote is merely a mechanism within an established authority structure; it does not create unlimited power. Without proper authorization and compliance with notice, quorum, and statutory procedures, a vote is void. In software agents, jumping straight to tool execution without authorization and state validation causes runaway loops and unauthorized side effects.</p>
+  </details>
+
+  <h2>1. What Makes an LLM an "Agent"?</h2>
+  <p>A standard LLM is a <strong>stateless, single-shot token predictor</strong>: it takes an input prompt and generates a completion. An <strong>agent</strong> is an architecture that wraps this foundation model inside a control loop equipped with memory, state, and external tools.</p>
+
+  <div class="callout">
+    <strong>The Core Formula:</strong> <code>Agent = LLM (Cognitive Engine) + State/Memory + Tools (Actuators) + Feedback Control Loop</code>
+  </div>
+
+  <h2>2. The Corporate Governance Mapping: Why Agents Need State Machines</h2>
+  <p>In <a href="0001-governance-map.html">Lesson 01</a> and <a href="0002-authority-before-votes.html">Lesson 02</a>, we learned that corporate power is never unconstrained: it is partitioned across distinct bodies, bound by delegated spending limits, and checked by procedural safeguards. An agent loop mirrors this exact architecture:</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Corporate Governance Principle</th>
+        <th>Corporate Legal Mechanism</th>
+        <th>Agent Architecture Translation</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Delegated Spending Limits</strong> (<a href="0002-authority-before-votes.html">Lesson 02</a>)</td>
+        <td>CEO may approve purchases up to ₹5 lakh; Board approval required above.</td>
+        <td><strong>Step &amp; Token Budgets:</strong> Max loop iterations (e.g. <code>max_iterations = 10</code>) and API cost caps to prevent runaway token expenditure.</td>
+      </tr>
+      <tr>
+        <td><strong>Procedural Validity &amp; Quorum</strong> (<a href="0002-authority-before-votes.html">Lesson 02</a>)</td>
+        <td>A board vote is void without proper notice, quorum, and eligible participation.</td>
+        <td><strong>State Transition Invariants:</strong> Tool actions cannot fire unless preceding state parameters pass strict JSON Schema validation.</td>
+      </tr>
+      <tr>
+        <td><strong>Conflict Override &amp; Escalation</strong> (<a href="0003-fiduciary-duties-and-committees.html">Lesson 03</a>)</td>
+        <td>Related-party deals override routine spending caps and escalate to the Audit Committee.</td>
+        <td><strong>Anomaly / Policy Circuit Breakers:</strong> Suspicious mutations or out-of-bounds inputs pause the loop and trigger Human-in-the-Loop (HITL) review.</td>
+      </tr>
+      <tr>
+        <td><strong>Retained Accountability</strong> (<a href="0005-ai-agent-governance.html">Lesson 05</a>)</td>
+        <td>The board retains ultimate fiduciary liability (§ 166) even after delegating operations.</td>
+        <td><strong>Deterministic Audit Trails:</strong> Immutable event logging and OpenTelemetry spans proving the agent followed authorized instructions.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>3. The Evolution of Agent Loops</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Pattern</th>
+        <th>How it Works</th>
+        <th>Primary Failure Mode</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Single-Shot LLM</strong></td>
+        <td><code>Prompt ➔ LLM ➔ Final Output</code></td>
+        <td>Cannot fetch live data, verify facts, or perform multi-step computation. Hallucinates when missing info.</td>
+      </tr>
+      <tr>
+        <td><strong>ReAct (Reason + Act)</strong></td>
+        <td><code>Thought ➔ Action (Tool Call) ➔ Observation (Tool Result) ➔ Thought ... ➔ Final Answer</code></td>
+        <td>Can enter infinite execution loops, repeat failing tool calls, or lose context as history balloons.</td>
+      </tr>
+      <tr>
+        <td><strong>Deterministic State Machine</strong></td>
+        <td>A finite state machine (FSM) where states (Plan, Execute, Critique, Reflect, Fallback) have explicit entry/exit conditions and hard step budgets.</td>
+        <td>More rigid design, but drastically safer, predictable, and production-ready.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>4. Anatomy of a Production Agent State Machine</h2>
+  <p>Rather than letting an agent endlessly "think and act", robust systems model execution as explicit state transitions:</p>
+  <pre>
+┌─────────────┐
+│  USER INPUT │
+└──────┬──────┘
+       ▼
+┌─────────────┐       Exceeded Step Limit
+│  PLANNING   ├─────────────────────────────────┐
+└──────┬──────┘                                 │
+       ▼                                        ▼
+┌─────────────┐       Invalid / Error     ┌─────────────┐
+│ TOOL ACTION ├──────────────────────────►│   FALLBACK  │
+└──────┬──────┘                           └──────┬──────┘
+       ▼ Valid Tool Output                       │
+┌─────────────┐                                  │
+│ EVALUATE /  ├──────────────────────────────────┤
+│ REFLECT     │                                  │
+└──────┬──────┘                                  │
+       ▼ Goal Satisfied                          ▼
+┌─────────────┐                           ┌─────────────┐
+│ FINAL REPLY │                           │ ESCALATE /  │
+└─────────────┘                           │ HUMAN REVIEW│
+                                          └─────────────┘
+  </pre>
+
+  <h2>5. Three Essential Guardrails for the Core Loop</h2>
+  <ul>
+    <li><strong>1. Step &amp; Token Budgets:</strong> Every loop iteration must decrement a maximum step counter (e.g., <code>max_iterations = 10</code>) and enforce strict token spending caps to prevent runaway API bills.</li>
+    <li><strong>2. Loop Detection &amp; Deduplication:</strong> If an agent issues the identical tool call with identical arguments consecutively, the engine must intercept and force a reflection prompt rather than executing the duplicate call.</li>
+    <li><strong>3. Segregation of Scratchpad vs. Output:</strong> Internal chain-of-thought ("scratchpad" reasoning) must be kept distinct from the sanitized, validated response presented to external callers or end users.</li>
+  </ul>
+
+  <h2 id="quiz">6. Architecture Diagnostic Scenarios</h2>
+  <p>Test your systems design thinking on these three core loop scenarios:</p>
+
+  <form data-quiz>
+    <fieldset data-answer="B" data-explanation="A finite state machine with explicit step budgets and loop detection halts execution before token resources are exhausted, escalating gracefully when an unresolvable error occurs.">
+      <legend>1. An agent querying an external SQL database gets a 'Syntax Error'. In an unconstrained ReAct loop, it repeatedly attempts the exact same SQL query 40 times until the API context window overflows. What architectural pattern directly prevents this?</legend>
+      <label><input type="radio" name="q1" value="A"> A. Doubling the context window size from 32k to 128k tokens.</label>
+      <label><input type="radio" name="q1" value="B"> B. An execution control loop with tool-call deduplication and a hard step budget (max iterations) triggering a fallback state.</label>
+      <label><input type="radio" name="q1" value="C"> C. Running the query in an asynchronous thread without error logging.</label>
+      <p class="feedback" aria-live="polite"></p>
+    </fieldset>
+
+    <fieldset data-answer="A" data-explanation="State persistence allows an agent to survive process restarts, inspect intermediate states for debugging, and enable long-running asynchronous human approvals (HITL).">
+      <legend>2. Why should an enterprise agent persist its execution state machine to an external database (e.g. Postgres or Redis) between tool turns, rather than keeping state only in in-memory Python variables?</legend>
+      <label><input type="radio" name="q2" value="A"> A. To survive server restarts, support asynchronous human-in-the-loop pauses, and enable deterministic audit replays.</label>
+      <label><input type="radio" name="q2" value="B"> B. Because LLMs cannot read data stored in memory variables.</label>
+      <label><input type="radio" name="q2" value="C"> C. To automatically bypass the need for prompt engineering.</label>
+      <p class="feedback" aria-live="polite"></p>
+    </fieldset>
+
+    <fieldset data-answer="C" data-explanation="Deterministic logic handles validation, quotas, and state transitions reliably, whereas the LLM should be reserved for fuzzy semantic reasoning and planning where rigid rules cannot be hard-coded.">
+      <legend>3. When designing an agent architecture, which responsibility should be handled by deterministic Python code rather than delegated to the LLM's prompt instructions?</legend>
+      <label><input type="radio" name="q3" value="A"> A. Summarizing an ambiguous customer email.</label>
+      <label><input type="radio" name="q3" value="B"> B. Interpreting natural language user intent.</label>
+      <label><input type="radio" name="q3" value="C"> C. Enforcing tool authorization schemas, API spend quotas, and rate limiting.</label>
+      <p class="feedback" aria-live="polite"></p>
+    </fieldset>
+
+    <button type="submit">Check answers and explanations</button>
+    <p data-result aria-live="polite"></p>
+  </form>
+
+  <h2>7. Deep Thinking Dilemma: The Re-Planning Horizon</h2>
+  <div class="callout">
+    <strong>No straight forward answer:</strong> When a tool action fails mid-execution on step 6 of a 10-step plan, should your agent discard the entire remaining plan and generate a brand-new plan from scratch, or attempt a localized repair on step 6?
+  </div>
+
+  <h3>The Architectural Tension</h3>
+  <ul>
+    <li><strong>Full Global Re-Planning:</strong> Allows the agent to rethink alternative strategies if the landscape has fundamentally changed. However, it is token-expensive, slow, and frequently causes <em>goal drift</em>—the agent forgets earlier completed constraints and starts hallucinating new objectives.</li>
+    <li><strong>Localized In-Place Repair:</strong> Fast and token-efficient. But if the failure at step 6 was caused by an invalid assumption made way back in step 1, local retries will futilely hammer a dead end until step budgets run out.</li>
+  </ul>
+
+  <h3>Architectural Recommendations &amp; Directions to Explore</h3>
+  <ol>
+    <li><strong>Two-Tier Planning Hierarchy:</strong> Decouple the <em>Strategic Planner</em> (macro milestones) from the <em>Tactical Executor</em> (tool actions). Let the tactical executor retry locally with alternative parameters up to 2 times; only escalate back to the strategic planner if a macro milestone is blocked.</li>
+    <li><strong>Hierarchical Task Networks (HTN):</strong> Explore classical AI planning paradigms like HTNs, where high-level tasks decompose into fallback branches deterministically before invoking probabilistic LLM generation.</li>
+    <li><strong>Tree of Thoughts / MCTS Exploration:</strong> Read the seminal papers on <em>Tree of Thoughts (Yao et al.)</em> and <em>Language Agent Tree Search (LATS)</em> to examine how search trees navigate backtracking without erasing verified progress.</li>
+  </ol>
+  <p><a href="../reference/deep-thinking.html">Explore more deep architectural dilemmas in the reference library →</a></p>
+
+  <nav class="page-nav" aria-label="Lesson navigation">
+    <a href="../index.html">← Dashboard</a>
+    <a href="agent-02-tooling-and-sandboxing.html">Next: Lesson A02 (Tooling &amp; Sandboxing) →</a>
+  </nav>
+</main>
+<footer class="dashboard-footer">
+  <strong>AI Agent Architecture Series</strong>
+  <p>Systems engineering, state machines, and safe autonomous control loops.</p>
+</footer>
+</body>
+</html>
